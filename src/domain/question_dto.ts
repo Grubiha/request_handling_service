@@ -2,7 +2,7 @@ import { IsDate, IsNotEmpty, IsOptional, IsString } from "class-validator";
 import { BasicValidator } from "../validator/basic";
 import { Transform } from "class-transformer";
 
-export class CreateIssueDto extends BasicValidator {
+export class CreateQuestionDto extends BasicValidator {
   @IsString()
   @IsNotEmpty()
   title!: string;
@@ -12,7 +12,7 @@ export class CreateIssueDto extends BasicValidator {
   text!: string;
 }
 
-export class UpdateIssueDto extends BasicValidator {
+export class UpdateQuestionDto extends BasicValidator {
   @IsString()
   @IsNotEmpty()
   id!: string;
@@ -20,15 +20,10 @@ export class UpdateIssueDto extends BasicValidator {
   @IsOptional()
   @IsString()
   @IsNotEmpty()
-  status?: string;
-
-  @IsOptional()
-  @IsString()
-  @IsNotEmpty()
-  answer?: string;
+  status!: string;
 }
 
-export class FindIssuesDto extends BasicValidator {
+export class FindQuestionDto extends BasicValidator {
   @Transform(({ value }) => new Date(value), { toClassOnly: true })
   @IsDate()
   after!: Date;

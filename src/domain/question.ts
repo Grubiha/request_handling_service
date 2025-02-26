@@ -1,24 +1,27 @@
 // export type IssueStatus = "Новое" | "В работе" | "Завершено" | "Отменено"
 
-export enum IssueStatus {
+export enum QuestionStatus {
   New = "Новое",
   InProcess = "В работе",
   Completed = "Завершено",
   Canseled = "Отменено",
 }
 
-export class Issue {
+export class Question {
   constructor(
     readonly id: string,
-    readonly status: IssueStatus,
+    readonly status: QuestionStatus,
     readonly title: string,
     readonly text: string,
-    readonly answer: string,
     readonly createAt: Date,
+
+    readonly answerId: string,
   ) {}
 
-  static ParseStatus(status: string): IssueStatus | undefined {
-    const matchedStatus = Object.values(IssueStatus).find((s) => s === status);
+  static ParseStatus(status: string): QuestionStatus | undefined {
+    const matchedStatus = Object.values(QuestionStatus).find(
+      (s) => s === status,
+    );
     return matchedStatus;
   }
 }
