@@ -1,8 +1,8 @@
 import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from "typeorm";
-import { QuestionEntity } from "./question";
+import { Question } from "./question";
 
 @Entity("answer")
-export class AnswerEntity {
+export class Answer {
   @PrimaryGeneratedColumn("uuid")
   id!: string;
 
@@ -12,6 +12,6 @@ export class AnswerEntity {
   @Column({ type: "timestamp", default: () => "now()" })
   created_at!: Date;
 
-  @OneToOne(() => QuestionEntity, (question) => question.answer)
-  question!: QuestionEntity;
+  @OneToOne(() => Question, (question) => question.answer)
+  question!: Question;
 }

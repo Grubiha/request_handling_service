@@ -5,14 +5,21 @@ import {
   OneToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { AnswerEntity } from "./answer";
+import { Answer } from "./answer";
+
+export enum QuestionStatus {
+  NEW = "Новое",
+  IN_PROGRESS = "В процессе",
+  COMPLETED = "Выполнено",
+  CANCELED = "Отменено",
+}
 
 @Entity("question")
-export class QuestionEntity {
+export class Question {
   @PrimaryGeneratedColumn("uuid")
   id!: string;
 
-  @Column({ default: "Новое" })
+  @Column({ default: QuestionStatus.NEW })
   status!: string;
 
   @Column()
@@ -27,7 +34,7 @@ export class QuestionEntity {
   @Column({ type: "uuid", nullable: true, unique: true })
   answer_id!: string;
 
-  @OneToOne(() => AnswerEntity, (answer) => answer.question, { nullable: true })
+  @OneToOne(() => Answer, (answer) => answer.question, { nullable: true })
   @JoinColumn({ name: "answer_id" })
-  answer!: AnswerEntity;
+  answer!: Answer;
 }

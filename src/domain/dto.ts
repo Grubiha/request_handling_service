@@ -12,23 +12,30 @@ export class CreateQuestionDto extends BasicValidator {
   text!: string;
 }
 
-export class UpdateQuestionDto extends BasicValidator {
+export class FindQuestionDto extends BasicValidator {
+  @IsString()
+  @IsNotEmpty()
+  id!: string;
+}
+
+export class RespondDto extends BasicValidator {
   @IsString()
   @IsNotEmpty()
   id!: string;
 
-  @IsOptional()
   @IsString()
   @IsNotEmpty()
-  status!: string;
+  text!: string;
 }
 
-export class FindQuestionDto extends BasicValidator {
+export class FindQuestionsDto extends BasicValidator {
+  @IsOptional()
   @Transform(({ value }) => new Date(value), { toClassOnly: true })
   @IsDate()
-  after!: Date;
+  after?: Date;
 
+  @IsOptional()
   @Transform(({ value }) => new Date(value), { toClassOnly: true })
   @IsDate()
-  before!: Date;
+  before?: Date;
 }

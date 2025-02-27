@@ -1,9 +1,9 @@
 import { DataSource } from "typeorm";
-import {  AnswerEntity,  QuestionEntity } from "./entity";
+import { Answer, Question } from "./entity";
 import {
   CreateExtensionUuidOssp1740597148729,
   CreateTablesQuestionAnswer1740588881462,
-} from "../migration";
+} from "./migration";
 
 const AppDataSource = () => {
   const port = parseInt(process.env.DB_PORT || "", 10);
@@ -27,7 +27,7 @@ const AppDataSource = () => {
     database,
     synchronize: false,
     logging: true,
-    entities: [AnswerEntity, QuestionEntity],
+    entities: [Answer, Question],
     migrations: [
       CreateExtensionUuidOssp1740597148729,
       CreateTablesQuestionAnswer1740588881462,
