@@ -13,4 +13,8 @@ export class ApiError extends Error {
   static BadRequestError(message: string) {
     return new ApiError(400, message);
   }
+
+  static ConflictError(message: string) {
+    return new ApiError(409, message);
+  }
 }

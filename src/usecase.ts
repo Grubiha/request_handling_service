@@ -26,8 +26,9 @@ export class Usecase implements IUsecase {
     dto.validate();
     const question = await this.questionRepository.findOneBy({ id: dto.id });
     if (!question) throw ApiError.NotFoundError("Question not found");
-
-    question.status = QuestionStatus.IN_PROGRESS;
+    if (question.status !== QuestionStatus.NEW)
+      throw ApiError.ConflictError("Question is not new");
+    question.status = QuestionStatus.IN_PROCESS;
     this.questionRepository.save(question);
   }
 
@@ -35,6 +36,8 @@ export class Usecase implements IUsecase {
     dto.validate();
     const question = await this.questionRepository.findOneBy({ id: dto.id });
     if (!question) throw ApiError.NotFoundError("Question not found");
+    if (question.status !== QuestionStatus.IN_PROCESS)
+      throw ApiError.ConflictError("Question is not in process");
 
     const answer = this.answerRepository.create({ text: dto.text });
     const savedAnswer = await this.answerRepository.save(answer);
@@ -48,6 +51,8 @@ export class Usecase implements IUsecase {
     dto.validate();
     const question = await this.questionRepository.findOneBy({ id: dto.id });
     if (!question) throw ApiError.NotFoundError("Question not found");
+    if (question.status !== QuestionStatus.IN_PROCESS)
+      throw ApiError.ConflictError("Question is not in process");
 
     const answer = this.answerRepository.create({ text: dto.text });
     const savedAnswer = await this.answerRepository.save(answer);
@@ -70,7 +75,7 @@ export class Usecase implements IUsecase {
 
   async CancelAllInProcess(): Promise<void> {
     this.questionRepository.update(
-      { status: QuestionStatus.IN_PROGRESS },
+      { status: QuestionStatus.IN_PROCESS },
       { status: QuestionStatus.CANCELED },
     );
   }

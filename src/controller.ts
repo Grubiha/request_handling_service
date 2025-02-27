@@ -66,7 +66,12 @@ export class Controller {
   async GetQuestions(req: Request, res: Response, next: NextFunction) {
     try {
       const { after, before } = req.query;
-      const dto = plainToInstance(FindQuestionsDto, { after, before });
+
+      const filter: { after?: string; before?: string } = {}
+      if (typeof after === "string") filter.after = after;
+      if (typeof before === "string") filter.before = before;
+      
+      const dto = plainToInstance(FindQuestionsDto, filter);
       const questions = await this.usecase.GetQuestions(dto);
       res.status(200).json({ message: "OK", body: questions });
     } catch (err) {

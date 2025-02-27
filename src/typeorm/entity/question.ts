@@ -9,7 +9,7 @@ import { Answer } from "./answer";
 
 export enum QuestionStatus {
   NEW = "Новое",
-  IN_PROGRESS = "В процессе",
+  IN_PROCESS = "В процессе",
   COMPLETED = "Выполнено",
   CANCELED = "Отменено",
 }
